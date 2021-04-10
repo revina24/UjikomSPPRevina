@@ -14,6 +14,12 @@ import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import config.KoneksiDB;
 import config.UserSession;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 /**
  *
  * @author Revina
@@ -58,7 +64,7 @@ public class Dashboard extends javax.swing.JFrame {
         
         //block akses
         mnDataMaster.setVisible(false);
-        mnLaporan.setVisible(false);
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,6 +119,7 @@ public class Dashboard extends javax.swing.JFrame {
         smTambah_trans = new javax.swing.JMenuItem();
         mnLaporan = new javax.swing.JMenu();
         smGenerate_laporan = new javax.swing.JMenuItem();
+        smCetak_Laporan = new javax.swing.JMenuItem();
         mnAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -396,6 +403,11 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuBar1.add(mnPembayaran);
 
         mnLaporan.setText("Laporan");
+        mnLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnLaporanActionPerformed(evt);
+            }
+        });
 
         smGenerate_laporan.setText("Generate Laporan");
         smGenerate_laporan.addActionListener(new java.awt.event.ActionListener() {
@@ -404,6 +416,14 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
         mnLaporan.add(smGenerate_laporan);
+
+        smCetak_Laporan.setText("Cetak Laporan");
+        smCetak_Laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smCetak_LaporanActionPerformed(evt);
+            }
+        });
+        mnLaporan.add(smCetak_Laporan);
 
         jMenuBar1.add(mnLaporan);
 
@@ -491,6 +511,34 @@ public class Dashboard extends javax.swing.JFrame {
         new Report().setVisible(true);
         
     }//GEN-LAST:event_smGenerate_laporanActionPerformed
+
+    private void smCetak_LaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCetak_LaporanActionPerformed
+        // TODO add your handling code here:
+        try {
+            KoneksiDB.getConnection();
+            try {
+                Map<String, Object> parameter = new HashMap<String, Object>();
+                
+                File rpt = new File("src/laporan/Lap_Trans.jrxml");
+                JasperDesign jasDesign = JRXmlLoader.load(rpt);
+                parameter.clear();
+                JasperReport jasReport = JasperCompileManager.compileReport(jasDesign);
+                JasperPrint jasPrint = net.sf.jasperreports.engine.JasperFillManager.fillReport(jasReport, 
+                        parameter, KoneksiDB.getConnection());
+                JasperViewer.viewReport(jasPrint, false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Laporan tidak ditemukan" + e);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+        }
+        
+    }//GEN-LAST:event_smCetak_LaporanActionPerformed
+
+    private void mnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnLaporanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnLaporanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -634,6 +682,7 @@ public void tabelTrans() {
     private javax.swing.JMenu mnDataMaster;
     private javax.swing.JMenu mnLaporan;
     private javax.swing.JMenu mnPembayaran;
+    private javax.swing.JMenuItem smCetak_Laporan;
     private javax.swing.JMenuItem smData_kelas;
     private javax.swing.JMenuItem smData_petugas;
     private javax.swing.JMenuItem smData_siswa;

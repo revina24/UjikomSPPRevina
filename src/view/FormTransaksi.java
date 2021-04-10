@@ -19,7 +19,7 @@ import java.util.GregorianCalendar;
 public class FormTransaksi extends javax.swing.JFrame {
 String id = UserSession.get_id();
     String nama = UserSession.get_nama();
-    String level = UserSession.get_level();
+    String level = UserSession.get_level(); 
         
     Statement st;
     Connection con = KoneksiDB.getConnection();
@@ -606,7 +606,7 @@ private void tabelSiswa() {
                     
                     for(int a=0;a<3;a++){ 
                         nomor = "0" + nomor;
-                    }
+                    } 
                     tNo_Transaki.setText("TRS" + nomor);
                 }
             }

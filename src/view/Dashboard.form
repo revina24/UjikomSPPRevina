@@ -85,6 +85,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Laporan"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnLaporanActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="smGenerate_laporan">
               <Properties>
@@ -92,6 +95,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smGenerate_laporanActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="smCetak_Laporan">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cetak Laporan"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smCetak_LaporanActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
